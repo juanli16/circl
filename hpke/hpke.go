@@ -43,6 +43,9 @@ type Sealer interface {
 	// Seal takes a plaintext and associated data to produce a ciphertext.
 	// The nonce is handled by the Sealer and incremented after each call.
 	Seal(pt, aad []byte) (ct []byte, err error)
+	// SealWithNonce takes a plaintext and associated data to produce a ciphertext with computed nonce
+	// prepended. The nonce is handled by the Sealer and incremented after each call.
+	SealWithNonce(pt, aad []byte) (ct []byte, err error)
 }
 
 // Opener decrypts a ciphertext using an AEAD encryption.
@@ -52,6 +55,9 @@ type Opener interface {
 	// the plaintext. The nonce is handled by the Opener and incremented after
 	// each call.
 	Open(ct, aad []byte) (pt []byte, err error)
+	// OpenWithNonce takes a ciphertext and associated data to recover, if successful,
+	// the plaintext.
+	OpenWithNonce(ct, aad []byte) (pt []byte, err error)
 }
 
 // modeID represents an HPKE variant.
